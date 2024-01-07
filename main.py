@@ -17,49 +17,57 @@ common_styles = {
 }
 
 login_styles = {
-    'padding': '50px',
-    'background-color': '#007bff',  # A nice shade of blue
-    'color': 'white',
-    'height': '100vh',
+    'padding': '2rem',
+    'background-color': 'white',  # White card for the login form
+    'color': '#333',
+    'width': '350px',
+    'margin': 'auto',
+    'position': 'absolute',
+    'top': '50%',
+    'left': '50%',
+    'transform': 'translate(-50%, -50%)',
+    'border-radius': '8px',
+    'box-shadow': '0 4px 8px 0 rgba(0,0,0,0.2)',
     'display': 'flex',
     'flex-direction': 'column',
     'justify-content': 'center',
     'align-items': 'center',
-    'box-shadow': '0 4px 8px 0 rgba(0,0,0,0.2)'
 }
 
+
 input_styles = {
-    'width': '60%',
-    'padding': '15px',
+    'width': '80%',
+    'padding': '10px',
     'margin': '10px 0',
-    'display': 'inline-block',
-    'border': 'none',
-    'border-radius': '4px',
+    'border': '1px solid #ddd',
+    'border-radius': '20px',
     'box-sizing': 'border-box'
 }
 
 button_styles = {
-    'background-color': '#28a745',
-    'color': 'white',
+    'width': '80%',
+    'padding': '10px',
     'border': 'none',
-    'padding': '15px 32px',
-    'text-align': 'center',
-    'text-decoration': 'none',
-    'display': 'inline-block',
-    'font-size': '16px',
-    'margin': '4px 2px',
+    'background-color': '#6a1b9a',  # Purple color for the button
+    'color': 'white',
+    'margin-top': '20px',
+    'border-radius': '20px',
     'cursor': 'pointer',
-    'border-radius': '5px',
-    'box-shadow': '0 4px 8px 0 rgba(0,0,0,0.2)'
 }
 
+page_background_style = {
+    'height': '100vh',
+    'width': '100%',
+    'background': 'linear-gradient(to right, #7b4397, #dc2430)',  # Gradient background with purple
+    'font-family': 'Arial, sans-serif'
+}
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content', style=common_styles),
     dcc.Input(id='username', type='text', placeholder='Username', style={'display': 'none'}),
     dcc.Input(id='password', type='password', placeholder='Password', style={'display': 'none'})
-], style={'font-family': 'Arial, sans-serif'})
+], style=page_background_style)
 
 
 def login_layout():
