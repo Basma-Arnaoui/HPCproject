@@ -7,12 +7,60 @@ app = dash.Dash(__name__, suppress_callback_exceptions=True)
 
 list_of_nodes = [f"node{i:02}" for i in range(1, 18)] + ["visu01"]
 
+# Define some common styles
+common_styles = {
+    'margin': '10px',
+    'padding': '15px',
+    'border-radius': '5px',
+    'border': '1px solid #ddd',
+    'background-color': '#f9f9f9'
+}
+
+login_styles = {
+    'padding': '50px',
+    'background-color': '#007bff',  # A nice shade of blue
+    'color': 'white',
+    'height': '100vh',
+    'display': 'flex',
+    'flex-direction': 'column',
+    'justify-content': 'center',
+    'align-items': 'center',
+    'box-shadow': '0 4px 8px 0 rgba(0,0,0,0.2)'
+}
+
+input_styles = {
+    'width': '60%',
+    'padding': '15px',
+    'margin': '10px 0',
+    'display': 'inline-block',
+    'border': 'none',
+    'border-radius': '4px',
+    'box-sizing': 'border-box'
+}
+
+button_styles = {
+    'background-color': '#28a745',
+    'color': 'white',
+    'border': 'none',
+    'padding': '15px 32px',
+    'text-align': 'center',
+    'text-decoration': 'none',
+    'display': 'inline-block',
+    'font-size': '16px',
+    'margin': '4px 2px',
+    'cursor': 'pointer',
+    'border-radius': '5px',
+    'box-shadow': '0 4px 8px 0 rgba(0,0,0,0.2)'
+}
+
+
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content'),
+    html.Div(id='page-content', style=common_styles),
     dcc.Input(id='username', type='text', placeholder='Username', style={'display': 'none'}),
     dcc.Input(id='password', type='password', placeholder='Password', style={'display': 'none'})
-])
+], style={'font-family': 'Arial, sans-serif'})
+
 
 def login_layout():
     return html.Div([
@@ -22,7 +70,8 @@ def login_layout():
         html.Button('Login', id='login-button', n_clicks=0),
         html.Div(id='login-output'),
         html.Div(id='alert')  # For displaying login error messages
-    ])
+    ], style=login_styles)
+
 
 def node_page_layout():
     return html.Div([
@@ -32,7 +81,7 @@ def node_page_layout():
             options=[{'label': node, 'value': node} for node in list_of_nodes],
             value=list_of_nodes[0]
         ),
-        html.Div(id='node-details')
+        html.Div(id='node-details', style=common_styles)
     ])
 
 @app.callback(Output('page-content', 'children'),
@@ -106,7 +155,8 @@ def update_node_details(selected_node, username, password):
         cpu_free = cpu_total - cpu_alloc
         cpu_fig = dcc.Graph(
             figure={
-                'data': [{'values': [cpu_free, cpu_load], 'type': 'pie', 'name': 'CPU Usage'}],
+                'data': [{'values': [cpu_alloc, cpu_free], 'type': 'pie', 'name': 'CPU Usage',
+                          'labels': ['Allocated', 'Free']}],
                 'layout': {'title': 'CPU Usage'}
             }
         )
@@ -114,7 +164,8 @@ def update_node_details(selected_node, username, password):
         # Visualization - Memory
         mem_fig = dcc.Graph(
             figure={
-                'data': [{'values': [mem_free, mem_alloc], 'type': 'pie', 'name': 'Memory Usage'}],
+                'data': [{'values': [mem_alloc, mem_free], 'type': 'pie', 'name': 'Memory Usage',
+                          'labels': ['Allocated', 'Free']}],
                 'layout': {'title': 'Memory Usage'}
             }
         )
@@ -122,7 +173,7 @@ def update_node_details(selected_node, username, password):
         # Visualization - GPU
         gpu_fig = dcc.Graph(
             figure={
-                'data': [{'values': [gpu_total, 1], 'type': 'pie', 'name': 'GPU Usage'}],  # Modify as per your data
+                'data': [{'values': [gpu_total, 1], 'type': 'pie', 'name': 'GPU Usage','labels': ['Allocated', 'Free']}],  # Modify as per your data
                 'layout': {'title': 'GPU Usage'}
             }
         )
