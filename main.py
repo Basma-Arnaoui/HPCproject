@@ -72,7 +72,8 @@ app.layout = html.Div([
 
 def login_layout():
     return html.Div([
-        html.H2('Login to SimLab Cluster'),
+        html.H2('Login to UM6P SimLab Cluster'),
+        html.Img(src='assets/user_icon.png', style={'height': '60px', 'width': '80px', 'margin-bottom': '20px'}),
         dcc.Input(id='login-username', type='text', placeholder='Username'),
         dcc.Input(id='login-password', type='password', placeholder='Password'),
         html.Button('Login', id='login-button', n_clicks=0),
