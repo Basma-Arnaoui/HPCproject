@@ -10,4 +10,4 @@ Create a system that allows for the control and management of each node in a clu
 - Reporting: The system could generate regular reports on the status and resource usage of each node.
 - Create an Interface with Dash:
   - Use Dash to create a web interface that allows the user to select a node from the list of available nodes.
-  - Use a callback function to automatically update the information about the selected node.
+  - Use a callback function to automatically update eethe information about the selected node.
